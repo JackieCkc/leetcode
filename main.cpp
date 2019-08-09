@@ -1,4 +1,3 @@
-@@ -0,0 +1,57 @@
 #include <iostream>
 #include <map>
 #include <vector>
@@ -61,4 +60,3 @@ int main() {
     print(s.solve());
     return 0;
 }
-No newline at end of file
