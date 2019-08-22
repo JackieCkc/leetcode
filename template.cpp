@@ -11,6 +11,8 @@
 #include <sstream>
 #include <algorithm>
 #include <iterator>
+#include <regex>
+#include <queue>
 
 using namespace std;
 
@@ -46,6 +48,12 @@ void print(T t, Args... args) {
 void print_arr(int_arr& arr) {
     for (int e : arr) cout << e << " ";
     cout << endl;
+}
+
+string lower(string s) {
+    transform(s.begin(), s.end(), s.begin(),
+              [](unsigned char c) { return tolower(c); });
+    return s;
 }
 
 class Solution {
