@@ -4,6 +4,7 @@
 #include <tuple>
 #include <array>
 #include <stack>
+#include <list>
 #include <set>
 #include <unordered_map>
 #include <math.h>
