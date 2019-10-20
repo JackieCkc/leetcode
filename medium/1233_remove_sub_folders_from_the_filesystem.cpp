@@ -4,6 +4,7 @@
 #include <tuple>
 #include <array>
 #include <stack>
+#include <list>
 #include <set>
 #include <unordered_map>
 #include <math.h>
@@ -12,6 +13,7 @@
 #include <algorithm>
 #include <iterator>
 #include <regex>
+#include <queue>
 
 using namespace std;
 
@@ -44,10 +46,8 @@ void print(T t, Args... args) {
     print(args...);
 }
 
-void print_arr(int_arr& arr) {
-    for (int e : arr) {
-        cout << e << " ";
-    }
+void print_arr(vector<T> arr) {
+    for (auto e : arr) cout << e << " ";
     cout << endl;
 }
 
@@ -57,28 +57,43 @@ string lower(string s) {
     return s;
 }
 
-struct TrieNode {
-    TrieNode *nodes[26] = { nullptr };
-    string word;
-};
+vector<string> split(string s, char dim) {
+    vector<string> res;
+    stringstream ss(s);
+    string item;
+    while (getline(ss, item, dim)) {
+        res.push_back(item);
+    }
+    return res;
+}
 
 class Solution {
 public:
-    int kInversePairs(int n, int k) {
-        if (k == 0) return 1;
+    vector<string> removeSubfolders(vector<string>& folder) {
+        vector<vector<string>> paths;
+        for (auto f : folder) paths.push_back(split(f, '/'));
+        sort(paths.begin(), paths.end(), [](vector<string> &a, vector<string> &b) { return a.size() < b.size(); });
 
-        vector<vector<long>> dp(n + 1, vector<long>(k + 1, 0));
-        int mod = (int)(1e9 + 7);
+        set<string> roots;
+        vector<string> res;
 
-        f (i, n + 1) dp[i][0] = 1;
+        for (auto p : paths) {
+            string root;
+            bool ok = true;
 
-        f1 (i, 1, n + 1) {
-            f1 (j, 1, k + 1) {
-                dp[i][j] = (dp[i][j - 1] + dp[i - 1][j]) % mod;
-                if (j >= i) dp[i][j] -= dp[i - 1][j - i] % mod;
+            for (auto d : p) {
+                root += "/" + d;
+                if (roots.count(root)) {
+                    ok = false;
+                    break;
+                }
+            }
+
+            if (ok) {
+                roots.insert(root);
+                res.push_back(root.substr(1, root.size() - 1));
             }
         }
-
-        return (dp[n][k] + mod) % mod;
+        return res;
     }
 };
