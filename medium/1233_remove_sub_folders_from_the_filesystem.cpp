@@ -46,14 +46,16 @@ void print(T t, Args... args) {
     print(args...);
 }
 
-void print_arr(vector<T> arr) {
-    for (auto e : arr) cout << e << " ";
+template <typename T>
+void print_a(vector<T>& arr) {
+    cout << "[";
+    for (const auto& e : arr) cout << e << ", ";
+    cout << "]";
     cout << endl;
 }
 
 string lower(string s) {
-    transform(s.begin(), s.end(), s.begin(),
-              [](unsigned char c) { return tolower(c); });
+    transform(s.begin(), s.end(), s.begin(), [](char c) { return tolower(c); });
     return s;
 }
 
@@ -61,9 +63,7 @@ vector<string> split(string s, char dim) {
     vector<string> res;
     stringstream ss(s);
     string item;
-    while (getline(ss, item, dim)) {
-        res.push_back(item);
-    }
+    while (getline(ss, item, dim)) res.push_back(item);
     return res;
 }
 
@@ -78,22 +78,23 @@ public:
         vector<string> res;
 
         for (auto p : paths) {
-            string root;
+            string curr;
             bool ok = true;
 
-            for (auto d : p) {
-                root += "/" + d;
-                if (roots.count(root)) {
+            f1 (i, 1, p.size()) {
+                curr += "/" + p[i];
+                if (roots.count(curr)) {
                     ok = false;
                     break;
                 }
             }
 
             if (ok) {
-                roots.insert(root);
-                res.push_back(root.substr(1, root.size() - 1));
+                roots.insert(curr);
+                res.push_back(curr);
             }
         }
         return res;
     }
 };
+
