@@ -42,9 +42,7 @@ private:
             return 2;
         }
         
-        if (
-            
-            mem[x][y]) return mem[x][y];
+        if (mem[x][y]) return mem[x][y];
         int ans = min(dp(abs(x - 2), abs(y - 1)), dp(abs(x - 1), abs(y - 2))) + 1;
         mem[x][y] = ans;
         return ans;
